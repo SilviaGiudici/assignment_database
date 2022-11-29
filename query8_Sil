@@ -1,0 +1,7 @@
+SELECT	COALESCE((vinti/candidati)*100,-1) AS percSuccesso
+FROM 	movies LEFT JOIN(
+		SELECT	title, count(CASE WHEN result = 'won' THEN 1 ELSE 0) AS vinti, count(awards) AS candidati
+		FROM	movieawards
+		GROUP BY title
+	) AS tabella ON tabella.title = movies.title;
+WHERE	movies.year BETWEEN 1980 AND 1989
